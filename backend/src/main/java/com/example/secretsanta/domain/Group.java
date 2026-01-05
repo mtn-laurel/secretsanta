@@ -40,13 +40,17 @@ public class Group {
         return id;
     }
 
+    public Set<User> getMembers() {
+        return members;
+    }
+
     @ManyToMany
     @JoinTable(
         name = "group_members",
         joinColumns = @JoinColumn(name = "group_id"),
         inverseJoinColumns = @JoinColumn(name = "user_id")
     )
-    private Set<User> members;
+    public Set<User> members;
 
     private boolean drawn = false;
 
