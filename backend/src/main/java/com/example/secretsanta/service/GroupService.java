@@ -43,7 +43,7 @@ public class GroupService {
     //inputs: user_id, group_id
     //outputs: updated Group now including new added user id
     
-    public Group addUsertoGroup(Long userId, Long groupId) {
+    public Group addUserToGroup(Long userId, Long groupId) {
         //access data from repositories
         Group group = groupRepository.findById(groupId)
                 .orElseThrow(()-> new IllegalArgumentException("Group not found."));

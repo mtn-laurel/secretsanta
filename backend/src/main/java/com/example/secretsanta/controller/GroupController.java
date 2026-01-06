@@ -1,10 +1,15 @@
 package com.example.secretsanta.controller;
 
-//import the Group entity (domain model)
-import com.example.secretsanta.domain.Group; 
+import com.example.secretsanta.domain.Group;
 
 //import the service that contains business logic
 import com.example.secretsanta.service.GroupService;
+
+//import dto for create group request
+import com.example.secretsanta.dto.CreateGroupRequest;
+
+//import dto for create group response
+import com.example.secretsanta.dto.CreateGroupResponse;
 
 // Soring Web annotations
 import org.springframework.web.bind.annotation.*;
@@ -34,13 +39,12 @@ public class GroupController {
     //RequestBody tells spring to read JSON from request body
     //and convert it into a Group object
     @PostMapping
-    public Group createGroup(@RequestBody Group group) {
-        
-        //delegate the actual creation logic to the service layer
-        //the controller extracts only the needed fields
-        return groupService.createGroup(
-            group.getName(), 
-            group.getBudget()
+    public CreateGroupResponse createGroup(@RequestBody CreateGroupRequest request) {
+        Group group = groupService.createGroup(request.getName(), request.getBudget());
+        return new CreateGroupResponse(
+            "Group created successfully",
+            group.getInviteCode(),
+            group.getId()
         );
     }
 
@@ -53,6 +57,6 @@ public class GroupController {
             //extracts {userId} from URL
             @PathVariable Long userId
     ) {
-        return groupService.addUsertoGroup(userId, groupId);
+        return groupService.addUserToGroup(userId, groupId);
     }
 }
