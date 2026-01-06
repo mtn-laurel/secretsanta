@@ -30,6 +30,7 @@ public class GroupService {
         Group group = new Group();
         group.setName(name);
         group.setBudget(budget);
+        group.generateInviteCode();
         return groupRepository.save(group);
         
     }
