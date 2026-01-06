@@ -34,7 +34,8 @@ public class Group {
     public void generateInviteCode() {
         StringBuilder sb = new StringBuilder(6);
 
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 6; i++) 
+            {
             int index = RANDOM.nextInt(ALLOWED_CHARS.length());
             sb.append(ALLOWED_CHARS.charAt(index));
         }
@@ -43,6 +44,9 @@ public class Group {
     }
 
     //getters/setters
+    public Long getId() {
+        return id;
+    }
     
     public String getInviteCode() {
         return inviteCode;
