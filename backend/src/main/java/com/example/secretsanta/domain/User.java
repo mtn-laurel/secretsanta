@@ -2,6 +2,7 @@ package com.example.secretsanta.domain;
 
 import jakarta.persistence.*; //imports JPA annotations to define database mapping... @Id, etc.
 import java.util.Set; 
+import java.util.List;
 //Set is a collection that holds unique items
 //each user can belong to multiple groups
 //each group can have multiple users
@@ -24,6 +25,9 @@ public class User {
 
     private String password; //user's password
 
+    @ElementCollection
+    private List<String> wishListItems; //user's wishlist
+
     @ManyToMany(mappedBy = "members") 
     //represents relationships to groups
     //many users can be in many groups and vice versa
@@ -32,5 +36,47 @@ public class User {
 
     private Set<Group> groups; //holds all groups that this user is part of 
     
-    //getters and setters (or use Lombok)
+    //getters
+    public String getEmail() {
+        return email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public List<String> getWishListItems() {
+        return wishListItems;
+    }
+
+    public Set<Group> getGroups() {
+        return groups;
+    }
+
+    //setters
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setWishListItems(List<String> wishListItems) {
+        this.wishListItems = wishListItems;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setGroups(Set<Group> groups) {
+        this.groups = groups;
+    }
+
+
 }

@@ -5,12 +5,14 @@ public class JoinGroupResponse {
     private String message;
     private Long groupId;
     private String groupName;
+    private String inviteCode;
 
     //constructor
-    public JoinGroupResponse(String message, Long groupId, String groupName) {
+    public JoinGroupResponse(String message, Long groupId, String groupName, String inviteCode) {
         this.message = message;
         this.groupId = groupId;
         this.groupName = groupName;
+        this.inviteCode = inviteCode;
     }
 
     //getters
@@ -27,6 +29,10 @@ public class JoinGroupResponse {
         return groupName;
     }
 
+    public String getInviteCode() {
+        return inviteCode;
+    }
+
     //setters
 
     public void setMessage(String message) {
@@ -39,5 +45,9 @@ public class JoinGroupResponse {
 
     public void setGroupName(String groupName) {
         this.groupName = groupName;
+    }
+
+    public void setInviteCode(String inviteCode) {
+        this.inviteCode = inviteCode;
     }
 }
