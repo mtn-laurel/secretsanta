@@ -5,7 +5,7 @@ import java.util.Set;
 import java.util.Random;
 
 @Entity
-@Table(name = "groups")
+@Table(name = "secret_groups")
 public class Group {
 
     private static final String ALLOWED_CHARS = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
@@ -18,7 +18,6 @@ public class Group {
     private String inviteCode; //invite code
     private String name; // group name
     private int budget; // group budget
-    private Set<User> members; // group members
     
     @ManyToMany
     @JoinTable(
@@ -26,8 +25,9 @@ public class Group {
         joinColumns = @JoinColumn(name = "group_id"),
         inverseJoinColumns = @JoinColumn(name = "user_id")
     )
+    private Set<User> members; // group members
 
-    private boolean drawn = false;
+    private boolean drawn = false; // has the drawn happened? 
 
     public Group() {}
 
@@ -64,6 +64,10 @@ public class Group {
         return members;
     }
 
+    public boolean isDrawn() {
+        return drawn;
+    }
+
     //setters
     public void setId(Long id) {
         this.id = id;
@@ -83,5 +87,9 @@ public class Group {
 
     public void setMembers(Set<User> members) {
         this.members = members;
+    }
+
+    public void setDrawn(boolean drawn) {
+        this.drawn = drawn;
     }
 }
