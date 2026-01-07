@@ -83,4 +83,16 @@ public class GroupController {
     ) {
         return groupService.addUserToGroup(userId, groupId);
     }
+
+    // LIST group members
+    @GetMappingMapping("/{groupId}")
+    public ShowGroupResponse showGroup(@PathVariable Long groupId) {
+        Group group = groupService.getGroupWithMembers(groupId);
+
+        return new ShowGroupResponse(
+            group.getId(),
+            group.getName(),
+            group.getMembers()
+        );
+    }
 }
