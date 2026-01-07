@@ -5,6 +5,7 @@ import com.example.secretsanta.domain.User;
 import org.springframework.stereotype.Service;
 import com.example.secretsanta.repository.GroupRepository;
 import com.example.secretsanta.repository.UserRepository;
+import java.util.List;
 
 @Service
 
@@ -31,8 +32,37 @@ public class GroupService {
         group.setName(name);
         group.setBudget(budget);
         group.generateInviteCode();
-        return groupRepository.save(group);
-        
+        return groupRepository.save(group);   
+    }
+
+    //add user to group after checking invite code validity 
+    //and wishlist item size
+    public Group joinGroupByInviteCode(String inviteCode, String userName, String email, List<String> wishListItems) {
+        Group group = groupRepository.findByInviteCode(inviteCode)
+            .orElseThrow(() -> new IllegalArgumentException("Invalid invite code."));
+
+        if (wishListItems.size() < 4 || wishListItems.size() > 10) {
+            throw new IllegalArgumentException("Wishlist must have a minimum of 4 items and maximum of 10.");
+        }
+
+        //find existing user or create new
+        User user = userRepository.findByEmail(email)
+            .orElseGet(() -> {
+                User newUser = new User();
+                newUser.setName(userName);
+                newUser.setEmail(email);
+                newUser.setWishListItems(wishListItems);
+                return userRepository.save(newUser);
+            });
+            //make sure user isnt already in group
+            if (group.getMembers().contains(user)) {
+                throw new IllegalStateException("User already in group.");
+            }
+            //add user to group
+            group.getMembers().add(user);
+
+            //save updated group
+            return groupRepository.save(group); //return updated group
     }
 
     //add user to a group
@@ -42,7 +72,7 @@ public class GroupService {
     //then add and save the user to the group
     //inputs: user_id, group_id
     //outputs: updated Group now including new added user id
-    
+
     public Group addUserToGroup(Long userId, Long groupId) {
         //access data from repositories
         Group group = groupRepository.findById(groupId)

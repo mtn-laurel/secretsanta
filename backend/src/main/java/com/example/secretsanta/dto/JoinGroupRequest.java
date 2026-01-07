@@ -18,32 +18,36 @@ public class JoinGroupRequest {
     @Size(min = 4, max = 10)
     List<String> wishListItems;
 
+    //getters
+
     public String getInviteCode() {
         return inviteCode;
-    }
-
-    public void setInviteCode(String inviteCode) {
-        this.inviteCode = inviteCode;
     }
 
     public String getUserName() {
         return userName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public List<String> getWishListItems() {
         return wishListItems;
+    }
+
+    //setters
+
+    public void setInviteCode(String inviteCode) {
+        this.inviteCode = inviteCode;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setWishListItems(List<String> wishListItems) {

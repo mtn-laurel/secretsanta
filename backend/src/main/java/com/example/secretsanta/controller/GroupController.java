@@ -5,13 +5,16 @@ import com.example.secretsanta.domain.Group;
 //import the service that contains business logic
 import com.example.secretsanta.service.GroupService;
 
-//import dto for create group request
+//import dto for create/join group request
 import com.example.secretsanta.dto.CreateGroupRequest;
+import com.example.secretsanta.dto.JoinGroupRequest;
 
-//import dto for create group response
+//import dto for create/join group response
 import com.example.secretsanta.dto.CreateGroupResponse;
+import com.example.secretsanta.dto.JoinGroupResponse;
 
-// Soring Web annotations
+
+// Spring Web annotations
 import org.springframework.web.bind.annotation.*;
 
 //marks this class as a REST API controller
@@ -35,7 +38,7 @@ public class GroupController {
         this.groupService = groupService;
     }
 
-    //create a new group
+    // CREATE new group
     //RequestBody tells spring to read JSON from request body
     //and convert it into a Group object
     @PostMapping
@@ -48,7 +51,28 @@ public class GroupController {
         );
     }
 
-    //add user to a group
+    // JOIN group with invite code - controller method
+    @PostMapping("/join")
+    public JoinGroupResponse joinGroup(@RequestBody JoinGroupRequest request) {
+        
+        //call service layer to handle business logic
+        Group group = groupService.joinGroupByInviteCode(
+            request.getInviteCode(),
+            request.getUserName(),
+            request.getEmail(),
+            request.getWishListItems()
+        );
+
+        //build response DTO
+        return new JoinGroupResponse(
+            "Successully joined the group!", 
+            group.getId(),
+            group.getName(),
+            group.getInviteCode()
+        );
+    }
+
+    // ADD user to group
     @PostMapping("/{groupId}/users/{userId}")
     public Group addUserToGroup(
 

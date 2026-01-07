@@ -13,11 +13,12 @@ public class Group {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id; //group id
 
-    private String inviteCode;
-    private String name;
-    private int budget;
+    private String inviteCode; //invite code
+    private String name; // group name
+    private int budget; // group budget
+    private Set<User> members; // group members
     
     @ManyToMany
     @JoinTable(
@@ -25,7 +26,6 @@ public class Group {
         joinColumns = @JoinColumn(name = "group_id"),
         inverseJoinColumns = @JoinColumn(name = "user_id")
     )
-    private Set<User> members;
 
     private boolean drawn = false;
 
@@ -43,13 +43,34 @@ public class Group {
         this.inviteCode = sb.toString();
     }
 
-    //getters/setters
+    //getters
     public Long getId() {
         return id;
     }
     
     public String getInviteCode() {
         return inviteCode;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getBudget() {
+        return budget;
+    }
+
+    public Set<User> getMembers() {
+        return members;
+    }
+
+    //setters
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setInviteCode(String inviteCode) {
+        this.inviteCode = inviteCode;
     }
 
     public void setName(String name) {
@@ -60,8 +81,7 @@ public class Group {
         this.budget = budget;
     }
 
-    public Set<User> getMembers() {
-        return members;
+    public void setMembers(Set<User> members) {
+        this.members = members;
     }
-    
 }
