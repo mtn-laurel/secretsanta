@@ -1,15 +1,15 @@
 spring:
   application:
     name: secretsanta
-
   datasource:
-    url: jdbc:mysql://localhost:3306/secretsanta_db?useSSL=false&serverTimezone=UTC
-    username: root
-    password: orange
-    driver-class-name: com.mysql.cj.jdbc.Driver
-
+    url: jdbc:h2:mem:secretsanta_db
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
   jpa:
     hibernate:
-      ddl-auto: update  
+      ddl-auto: create-drop
     show-sql: true
-         
+  h2:
+    console:
+      enabled: true
