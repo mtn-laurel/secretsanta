@@ -1,4 +1,6 @@
 // Login.jsx
 export default function Groups() {
-  return <h1>Groups Page</h1>
+    const Groups = () => <h1>Home Page</h1>;
+
+    export default Groups;
 }
